@@ -1,7 +1,5 @@
-// This route handler initiates the Spotify OAuth flow by redirecting the user
-// to Spotify's authorization page.
-// You need to set the following environment variables:
-// SPOTIFY_CLIENT_ID and SPOTIFY_REDIRECT_URI
+// This route handler initiates the Spotify OAuth flow by redirecting the user to Spotify's authorization page.
+
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const SPOTIFY_REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
 // Scopes define what data your app is allowed to access

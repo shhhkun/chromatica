@@ -4,8 +4,12 @@ const Layout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <div></div>
+        <div>
+          {children}
+        </div>
       </body>
     </html>
   );
 };
+
+export default Layout;

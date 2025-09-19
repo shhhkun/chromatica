@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Page() {
+const Page = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSpotifyLogin = () => {
@@ -27,4 +27,6 @@ export default function Page() {
       </button>
     </main>
   );
-}
+};
+
+export default Page;
