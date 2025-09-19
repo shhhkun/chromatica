@@ -1,4 +1,4 @@
-// This route handler initiates the Spotify OAuth flow by redirecting the user to Spotify's authorization page.
+// This route handler initiates the Spotify OAuth flow by redirecting the user to Spotify's authorization page
 
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const SPOTIFY_REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI;
