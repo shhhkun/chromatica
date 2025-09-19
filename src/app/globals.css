@@ -2,15 +2,8 @@
 
 :root {
   --bg: #e98615;
-  --text: #1a1a1a;
+  --text: #ffffff;
 }
-
-/* @media (prefers-color-scheme: dark) { 
-  :root {
-    --bg: #EBE2D8;
-    --text: #563d22;
-  }
-} */
 
 body {
   background: var(--bg);
