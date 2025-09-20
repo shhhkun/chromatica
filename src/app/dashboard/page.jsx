@@ -105,9 +105,19 @@ const DashboardPage = () => {
         <div className="custom-scrollbar max-h-80 overflow-y-auto space-y-2">
           {topTracks.length > 0 ? (
             topTracks.map((track, index) => (
-              <div key={index} className="p-3 border-t border-[#ffffff]">
-                <p className="text-lg font-bold">{track.name}</p>
-                <p className="text-sm">{track.artist}</p>
+              <div
+                key={index}
+                className="flex items-center space-x-4 p-3 border-t border-[#ffffff]"
+              >
+                <img
+                  src={track.albumArtUrl}
+                  alt={`Album art for ${track.name}`}
+                  className="w-16 h-16 rounded-md"
+                />
+                <div className="flex flex-col">
+                  <p className="text-lg font-bold">{track.name}</p>
+                  <p className="text-sm">{track.artist}</p>
+                </div>
               </div>
             ))
           ) : (

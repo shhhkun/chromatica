@@ -93,11 +93,19 @@ export async function GET(request) {
 
     const topTracksData = await topTracksResponse.json();
 
-    // Step 4: Get track data (track name & artists name).
-    const tracks = topTracksData.items.map((track) => ({
-      name: track.name,
-      artist: track.artists.map((artist) => artist.name).join(", "),
-    }));
+    // Step 4: Get track data (track name, artists name, album art URL).
+    const tracks = topTracksData.items.map((track) => {
+      const albumArtUrl =
+        track.album.images.find((img) => img.height === 300)?.url ||
+        track.album.images[0]?.url ||
+        "";
+
+      return {
+        name: track.name,
+        artist: track.artists.map((artist) => artist.name).join(", "),
+        albumArtUrl: albumArtUrl,
+      };
+    });
 
     return NextResponse.json(tracks, { status: 200 });
   } catch (error) {
