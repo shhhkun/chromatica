@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
+import { cookies } from "next/headers";
+
 const prisma = new PrismaClient();
 
 // This makes sure the route is always re-run when you visit it
@@ -8,21 +10,20 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   try {
-    // We get the user ID from the URL (ID from neon db)
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get("userId");
+    // Get the secure session token from the users cookies.
+    const sessionToken = cookies().get("sessionToken")?.value;
 
-    if (!userId) {
+    if (!sessionToken) {
       return NextResponse.json(
-        { message: "User not authenticated or ID missing." },
+        { message: "User not authenticated." },
         { status: 401 }
       );
     }
 
-    // We use the ID to find the user in our database.
+    // Use the session token to find the user in the database.
     const user = await prisma.user.findUnique({
       where: {
-        id: userId,
+        sessionToken: sessionToken,
       },
     });
 

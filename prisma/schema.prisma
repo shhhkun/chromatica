@@ -22,4 +22,5 @@ model User {
   displayName         String?
   email               String?
   profileImageUrl     String?
+  sessionToken        String?  @unique
 }

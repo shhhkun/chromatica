@@ -81,10 +81,35 @@ export async function GET(request) {
 
       // Send the user to the dashboard page with their unique ID in the URL
       const redirectBase = REDIRECT_URI.split("/api/spotify/callback")[0];
-      const redirectUrl = new URL(`${redirectBase}/dashboard`);
-      redirectUrl.searchParams.set("userId", user.id);
 
-      return NextResponse.redirect(redirectUrl);
+      // Step 1: Generate a unique session token (random meaningless string)
+      const sessionToken = crypto.randomUUID();
+
+      // Step 2: Update the user in the database with the new session token, the next API call will use this token to find the user.
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { sessionToken },
+      });
+
+      // Step 3: Create a redirect response and manually set the 'Set-Cookie' header.
+      // This is a direct, reliable way to set the cookie that bypasses Next.js dynamic API checks.
+      const redirectUrl = new URL(`${redirectBase}/dashboard`);
+      const response = NextResponse.redirect(redirectUrl);
+
+      const cookieOptions = {
+        path: "/",
+        httpOnly: true,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+      };
+      const cookieString = `${encodeURIComponent(
+        "sessionToken"
+      )}=${encodeURIComponent(sessionToken)}; Path=${
+        cookieOptions.path
+      }; HttpOnly; SameSite=${cookieOptions.sameSite}; Secure`;
+      response.headers.set("Set-Cookie", cookieString);
+
+      return response;
     } else {
       console.error("Spotify token exchange failed:", data.error);
       return NextResponse.redirect(new URL("/", request.url));

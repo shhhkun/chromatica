@@ -15,9 +15,9 @@ const DashboardPage = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async (userId) => {
+    const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/spotify/user?userId=${userId}`);
+        const response = await fetch(`/api/spotify/user`);
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -26,24 +26,16 @@ const DashboardPage = () => {
 
         const data = await response.json();
         setUserData(data);
-        setLoading(false);
       } catch (e) {
         console.error("Error fetching user data:", e);
-        setError(e.message);
+        setError(e.message || "An unexpected error occured.");
+      } finally {
         setLoading(false);
       }
     };
 
-    const userId = searchParams.get("userId");
-    if (userId) {
-      fetchUserData(userId);
-    } else {
-      // no userId means the db didnt receive a new user/existing one
-      // userId in URL is temporary as its sensitive info
-      setLoading(false);
-      setError("Please log in to Spotify to continue.");
-    }
-  }, [searchParams]);
+    fetchUserData();
+  }, []);
 
   if (loading) {
     return (
