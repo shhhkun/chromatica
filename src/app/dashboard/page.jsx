@@ -14,6 +14,8 @@ const DashboardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [topTracks, setTopTracks] = useState([]);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -35,6 +37,24 @@ const DashboardPage = () => {
     };
 
     fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    const fetchTopTracks = async () => {
+      try {
+        const response = await fetch(`/api/spotify/top-tracks`);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch top tracks.");
+        }
+        const data = await response.json();
+        setTopTracks(data);
+      } catch (e) {
+        console.error("Error fetching top tracks:", e);
+      }
+    };
+
+    fetchTopTracks();
   }, []);
 
   if (loading) {
@@ -78,6 +98,25 @@ const DashboardPage = () => {
         You have successfully authenticated with Spotify.
       </p>
       <p className="text-lg">Your Spotify ID: {userData.spotifyId}</p>
+
+      {/* Top Tracks */}
+      <div className="w-full max-w-sm mt-8 border-2 pl-2 border-[#ffffff] rounded-lg">
+        <h2 className="text-2xl font-bold mb-4 text-center">Your Top Tracks</h2>
+        <div className="custom-scrollbar max-h-80 overflow-y-auto space-y-2">
+          {topTracks.length > 0 ? (
+            topTracks.map((track, index) => (
+              <div key={index} className="p-3 border-t border-[#ffffff]">
+                <p className="text-lg font-bold">{track.name}</p>
+                <p className="text-sm">{track.artist}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-center">
+              No top tracks found or still loading...
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

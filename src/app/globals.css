@@ -10,3 +10,13 @@ body {
   color: var(--text);
   font-family: Arial, sans-serif;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #c27012;
+  border-radius: 8px;
+}
