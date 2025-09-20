@@ -6,22 +6,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // check if the URL has a search query (where the tokens would be)
-    if (window.location.search.length > 0) {
-      const urlParams = new URLSearchParams(window.location.search);
-      const accessToken = urlParams.get("access_token");
-
-      if (accessToken) {
-        // if a token is found, redirect to the dashboard
-        window.location.href = "/dashboard" + window.location.search;
-      } else {
-        // if the URL has a search query but no tokens, it's an error
-        setLoading(false);
-      }
-    } else {
-      // if no search query, display the login button
-      setLoading(false);
-    }
+    setLoading(false);
   }, []);
 
   const handleSpotifyLogin = () => {
