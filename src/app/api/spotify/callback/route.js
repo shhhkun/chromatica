@@ -86,9 +86,13 @@ export async function GET(request) {
       const sessionToken = crypto.randomUUID();
 
       // Step 2: Update the user in the database with the new session token, the next API call will use this token to find the user.
+      // Calculate the session token expiration date (30 days from creation).
+      const sessionTokenExpires = new Date(
+        Date.now() + 1000 * 60 * 60 * 24 * 30
+      );
       await prisma.user.update({
         where: { id: user.id },
-        data: { sessionToken },
+        data: { sessionToken, sessionTokenExpires },
       });
 
       // Step 3: Create a redirect response and manually set the 'Set-Cookie' header.

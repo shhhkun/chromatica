@@ -10,8 +10,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   try {
+    const allCookies = await cookies();
+
     // Get the secure session token from the users cookies.
-    const sessionToken = cookies().get("sessionToken")?.value;
+    const sessionToken = allCookies.get("sessionToken")?.value;
 
     if (!sessionToken) {
       return NextResponse.json(
@@ -27,8 +29,12 @@ export async function GET(request) {
       },
     });
 
-    if (!user) {
-      return NextResponse.json({ message: "User not found." }, { status: 404 });
+    const now = new Date();
+    if (!user || (user.sessionTokenExpires && user.sessionTokenExpires < now)) {
+      return NextResponse.json(
+        { message: "User not authenticated or session expired." },
+        { status: 401 }
+      );
     }
 
     // Object that contains only sharable information
