@@ -25,6 +25,19 @@ const DashboardPage = () => {
   const tabs = ["Overview", "Palette", "Audio", "Tracks", "Artists"];
   const [activeTab, setActiveTab] = useState("Overview");
 
+  const tabContent = {
+    Overview: [
+      <VibePaletteCard key="palette" />,
+      <AudioProfileCard key="audio" />,
+      <TopTracksCard key="tracks" topTracks={topTracks} />,
+      <TopArtistsCard key="artists" topArtists={topArtists} />,
+    ],
+    Palette: [<VibePaletteCard key="palette" />],
+    Audio: [<AudioProfileCard key="audio" />],
+    Tracks: [<TopTracksCard key="tracks" topTracks={topTracks} />],
+    Artists: [<TopArtistsCard key="artists" topArtists={topArtists} />],
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -109,10 +122,7 @@ const DashboardPage = () => {
 
       {/* Cards Wrapper */}
       <div className="flex flex-col w-full px-0 py-8 sm:py-10 md:py-12 lg:py-18">
-        <VibePaletteCard />
-        <AudioProfileCard />
-        <TopTracksCard topTracks={topTracks} />
-        <TopArtistsCard topArtists={topArtists} />
+        {tabContent[activeTab]}
       </div>
     </div>
   );
