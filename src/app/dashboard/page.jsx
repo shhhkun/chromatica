@@ -9,6 +9,23 @@ import AudioProfileCard from "../components/AudioProfileCard.jsx";
 import TopTracksCard from "../components/TopTracksCard.jsx";
 import TopArtistsCard from "../components/TopArtistsCard.jsx";
 
+import { Vibrant } from "node-vibrant/browser";
+
+async function getVibePalette(imageUrl) {
+  if (!imageUrl) {
+    return null;
+  }
+
+  try {
+    const vibrant = new Vibrant(imageUrl);
+    const palette = await vibrant.getPalette();
+    return palette;
+  } catch (error) {
+    console.error("Failed to extract palette from image:", error);
+    return null;
+  }
+}
+
 const DashboardPage = () => {
   // hook to read the information in the URL
   const searchParams = useSearchParams();
@@ -27,12 +44,12 @@ const DashboardPage = () => {
 
   const tabContent = {
     Overview: [
-      <VibePaletteCard key="palette" />,
+      <VibePaletteCard key="palette" palettes={topTracks} />,
       <AudioProfileCard key="audio" />,
       <TopTracksCard key="tracks" topTracks={topTracks} />,
       <TopArtistsCard key="artists" topArtists={topArtists} />,
     ],
-    Palette: [<VibePaletteCard key="palette" />],
+    Palette: [<VibePaletteCard key="palette" palettes={topTracks} />],
     Audio: [<AudioProfileCard key="audio" />],
     Tracks: [<TopTracksCard key="tracks" topTracks={topTracks} />],
     Artists: [<TopArtistsCard key="artists" topArtists={topArtists} />],
@@ -41,14 +58,29 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [userRes, tracksRes, artistsRes, audioRes] = await Promise.all([
+        const [userRes, tracksRes, artistsRes] = await Promise.all([
           fetch(`/api/spotify/user`),
           fetch(`/api/spotify/top-tracks`),
           fetch(`/api/spotify/top-artists`),
         ]);
 
+        const tracksData = await tracksRes.json();
+
+        // fetch palettes from tracksData, which has album art URLs
+        const palettes = await Promise.all(
+          tracksData.map(async (track) => {
+            const palette = await getVibePalette(track.albumArtUrl);
+            return {
+              name: track.name,
+              albumArtUrl: track.albumArtUrl,
+              artist: track.arist,
+              palette,
+            };
+          })
+        );
+
         setUserData(await userRes.json());
-        setTopTracks(await tracksRes.json());
+        setTopTracks(palettes);
         setTopArtists(await artistsRes.json());
       } catch (e) {
         console.error("Error fetching data:", e);

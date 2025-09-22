@@ -1,8 +1,12 @@
-const TrackCard = ({ track }) => {
+const TrackCard = ({ track, bgColor }) => {
   return (
     <div
       className="flex flex-row p-2 sm:p-4 lg:p-6 rounded-lg"
-      style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+      style={{
+        backgroundColor: bgColor?.rgb
+          ? `rgba(${bgColor.rgb[0]}, ${bgColor.rgb[1]}, ${bgColor.rgb[2]}, 0.2)`
+          : `rgba(255, 255, 255, 0.05)`,
+      }}
     >
       <img
         src={track.albumArtUrl}
@@ -33,9 +37,12 @@ const TopTracksCard = ({ topTracks }) => {
       {/* Track Cards */}
       <div className="space-y-3 sm:space-y-5 lg:space-y-6">
         {topTracks.length > 0 ? (
-          topTracks.slice(0, 5).map((track, index) => (
+          topTracks.slice().map((track, index) => (
             <div key={index}>
-              <TrackCard track={track} />
+              <TrackCard
+                track={track}
+                bgColor={track.palette?.Muted}
+              />
             </div>
           ))
         ) : (
