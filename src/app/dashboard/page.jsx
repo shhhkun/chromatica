@@ -143,13 +143,13 @@ const DashboardPage = () => {
     <div className="flex flex-col items-center min-h-screen">
       {/* Header */}
       <div
-        className="flex flex-row w-full"
+        className="flex flex-row w-full px-4 sm:px-30 md:px-36 lg:px-54"
         style={{ backgroundColor: "#1E1E1E" }}
       >
         {userData.profileImageUrl && (
           <div
-            className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden 
-                       mx-8 my-4 sm:mx-12 sm:my-8 md:mx-16 md:my-12 lg:mx-18 lg:my-14"
+            className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden 
+                       my-4 mr-4 sm:my-8 sm:mr-8 md:my-10 md:mr-10 lg:my-12 lg:mr-12"
           >
             <Image
               src={userData.profileImageUrl}
@@ -164,21 +164,15 @@ const DashboardPage = () => {
         </h1>
       </div>
 
-
       {/* Cards Wrapper */}
-      <div className="flex flex-col w-full p-8 sm:p-10 md:p-12 lg:p-18">
+      <div className="flex flex-col w-full px-0 py-8 sm:py-10 md:py-12 lg:py-18">
         {/* Vibe Palette Card */}
         <div
-          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 mb-18 rounded-4xl"
+          className="flex flex-col p-4 sm:p-6 lg:p-8 mb-8 sm:mb-10 md:mb-12 lg:mb-18
+                     mx-0 sm:mx-30 md:mx-36 lg:mx-54 rounded-none sm:rounded-2xl md:rounded-3xl lg:rounded-4xl"
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
         >
-          {/* 
-          lg:      32
-          md:      24
-          sm:      20
-          default: 16
-          */}
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 md:mb-4 lg:mb-6 font-bold">
             Your Vibe Palette
           </h2>
           <div className="flex flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16">
@@ -199,13 +193,14 @@ const DashboardPage = () => {
 
         {/* Audio Profile Card */}
         <div
-          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 mb-18 rounded-4xl"
+          className="flex flex-col p-4 sm:p-6 lg:p-8 mb-8 sm:mb-10 md:mb-12 lg:mb-18 
+                     mx-0 sm:mx-30 md:mx-36 lg:mx-54 rounded-none sm:rounded-2xl md:rounded-3xl lg:rounded-4xl"
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
         >
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 md:mb-4 lg:mb-6 font-bold">
             Your Audio Profile
           </h2>
-          <div className="flex flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16">
+          <div className="flex flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-11">
             <CircularProgressBar
               percentage={80}
               label="Danceability"
@@ -226,14 +221,15 @@ const DashboardPage = () => {
 
         {/* Top Tracks Card */}
         <div
-          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 mb-18 rounded-4xl"
+          className="flex flex-col p-4 sm:p-6 lg:p-8 mb-8 sm:mb-10 md:mb-12 lg:mb-18
+                     mx-0 sm:mx-30 md:mx-36 lg:mx-54 rounded-none sm:rounded-2xl md:rounded-3xl lg:rounded-4xl"
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
         >
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 md:mb-4 lg:mb-6 font-bold">
             Your Top Tracks
           </h2>
           {/* Track Cards */}
-          <div className="space-y-6">
+          <div className="space-y-3 sm:space-y-5 lg:space-y-6">
             {topTracks.length > 0 ? (
               topTracks.map((track, index) => (
                 <div key={index}>
@@ -248,10 +244,11 @@ const DashboardPage = () => {
 
         {/* Top Artists Card */}
         <div
-          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 rounded-4xl"
+          className="flex flex-col p-4 sm:p-6 lg:p-8
+                     mx-0 sm:mx-30 md:mx-36 lg:mx-54 rounded-none sm:rounded-2xl md:rounded-3xl lg:rounded-4xl"
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
         >
-          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 md:mb-4 lg:mb-6 font-bold">
             Your Top Artists
           </h2>
           {/* Top Aritsts */}
