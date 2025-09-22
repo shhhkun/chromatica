@@ -8,27 +8,58 @@ const percentageToDegrees = (percentage) => {
   return (percentage / 100) * 360;
 };
 
+/* 
+  lg:      32 36
+  md:      24 28
+  sm:      20 24
+  default: 16 20
+*/
+
 const CircularProgressBar = ({ percentage, label, color }) => {
   const degrees = percentageToDegrees(percentage);
 
   return (
     <div className="flex flex-col items-center">
       <div
-        className="relative w-36 h-36 rounded-full flex items-center justify-center"
+        className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full flex items-center justify-center"
         style={{
           background: `conic-gradient(${color} ${degrees}deg, #1a1a1a 0deg)`,
         }}
       >
         {/* hole in the middle */}
         <div
-          className="absolute w-28 h-28 rounded-full"
+          className="absolute w-16 h-16 sm:w-19 sm:h-19 md:w-22 md:h-22 lg:w-28 lg:h-28 rounded-full"
           style={{ backgroundColor: "#121212" }}
         ></div>
-        <span className="relative text-2xl font-bold" style={{ color: color }}>
+        <span
+          className="relative text-base sm:text-lg md:text-xl lg:text-2xl font-bold"
+          style={{ color: color }}
+        >
           {percentage}%
         </span>
       </div>
-      <p className="mt-3 text-base font-bold">{label}</p>
+      <p className="mt-3 text-xs sm:text-sm lg:text-base font-bold">{label}</p>
+    </div>
+  );
+};
+
+const TrackCard = ({ track }) => {
+  return (
+    <div
+      className="flex flex-row p-2 sm:p-4 lg:p-6 rounded-lg"
+      style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+    >
+      <img
+        src={track.albumArtUrl}
+        alt={`Album art for ${track.name}`}
+        className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
+      />
+      <div className="flex flex-col justify-center ml-2 sm:ml-4 lg:ml-6">
+        <p className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">
+          {track.name}
+        </p>
+        <p className="text-xs sm:text-sm lg:text-base">{track.artist}</p>
+      </div>
     </div>
   );
 };
@@ -116,7 +147,10 @@ const DashboardPage = () => {
         style={{ backgroundColor: "#1E1E1E" }}
       >
         {userData.profileImageUrl && (
-          <div className="relative w-32 h-32 rounded-full overflow-hidden my-14 mx-18">
+          <div
+            className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden 
+                       mx-8 my-4 sm:mx-12 sm:my-8 md:mx-16 md:my-12 lg:mx-18 lg:my-14"
+          >
             <Image
               src={userData.profileImageUrl}
               alt="Spotify Profile"
@@ -125,30 +159,39 @@ const DashboardPage = () => {
             />
           </div>
         )}
-        <h1 className="flex items-center text-4xl font-bold">
+        <h1 className="flex items-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
           Welcome, {userData.displayName}.
         </h1>
       </div>
 
+
       {/* Cards Wrapper */}
-      <div className="flex flex-col w-full p-18">
+      <div className="flex flex-col w-full p-8 sm:p-10 md:p-12 lg:p-18">
         {/* Vibe Palette Card */}
         <div
-          className="flex flex-col w-full p-8 mb-18 rounded-4xl"
+          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 mb-18 rounded-4xl"
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
         >
-          <h2 className="text-2xl mb-6 font-bold">Your Vibe Palette</h2>
-          <div className="flex flex-row gap-16">
+          {/* 
+          lg:      32
+          md:      24
+          sm:      20
+          default: 16
+          */}
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+            Your Vibe Palette
+          </h2>
+          <div className="flex flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16">
             <div
-              className="h-36 w-36 rounded-lg"
+              className="aspect-square w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-lg"
               style={{ backgroundColor: "#7B8171" }}
             ></div>
             <div
-              className="h-36 w-36 rounded-lg"
+              className="aspect-square w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-lg"
               style={{ backgroundColor: "#595C6C" }}
             ></div>
             <div
-              className="h-36 w-36 rounded-lg"
+              className="aspect-square w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-lg"
               style={{ backgroundColor: "#BA6A6A" }}
             ></div>
           </div>
@@ -156,11 +199,13 @@ const DashboardPage = () => {
 
         {/* Audio Profile Card */}
         <div
-          className="flex flex-col w-full p-8 mb-18 rounded-4xl"
+          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 mb-18 rounded-4xl"
           style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
         >
-          <h2 className="text-2xl mb-6 font-bold">Your Audio Profile</h2>
-          <div className="flex flex-row gap-16">
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+            Your Audio Profile
+          </h2>
+          <div className="flex flex-row gap-4 sm:gap-8 md:gap-12 lg:gap-16">
             <CircularProgressBar
               percentage={80}
               label="Danceability"
@@ -178,39 +223,38 @@ const DashboardPage = () => {
             />
           </div>
         </div>
-      </div>
 
-      <p className="text-lg mb-2">
-        You have successfully authenticated with Spotify.
-      </p>
-      <p className="text-lg">Your Spotify ID: {userData.spotifyId}</p>
-
-      {/* Top Tracks */}
-      <div className="w-full max-w-sm mt-8 border-2 pl-2 border-[#ffffff] rounded-lg">
-        <h2 className="text-2xl font-bold mb-4 text-center">Your Top Tracks</h2>
-        <div className="custom-scrollbar max-h-80 overflow-y-auto space-y-2">
-          {topTracks.length > 0 ? (
-            topTracks.map((track, index) => (
-              <div
-                key={index}
-                className="flex items-center space-x-4 p-3 border-t border-[#ffffff]"
-              >
-                <img
-                  src={track.albumArtUrl}
-                  alt={`Album art for ${track.name}`}
-                  className="w-16 h-16 rounded-md"
-                />
-                <div className="flex flex-col">
-                  <p className="text-lg font-bold">{track.name}</p>
-                  <p className="text-sm">{track.artist}</p>
+        {/* Top Tracks Card */}
+        <div
+          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 mb-18 rounded-4xl"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+        >
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+            Your Top Tracks
+          </h2>
+          {/* Track Cards */}
+          <div className="space-y-6">
+            {topTracks.length > 0 ? (
+              topTracks.map((track, index) => (
+                <div key={index}>
+                  <TrackCard track={track} />
                 </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center">
-              No top tracks found or still loading...
-            </p>
-          )}
+              ))
+            ) : (
+              <p>No top tracks found</p>
+            )}
+          </div>
+        </div>
+
+        {/* Top Artists Card */}
+        <div
+          className="flex flex-col w-full p-4 sm:p-6 lg:p-8 rounded-4xl"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+        >
+          <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 font-bold">
+            Your Top Artists
+          </h2>
+          {/* Top Aritsts */}
         </div>
       </div>
     </div>
