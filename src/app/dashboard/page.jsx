@@ -45,7 +45,7 @@ const TrackCard = ({ track }) => {
       <img
         src={track.albumArtUrl}
         alt={`Album art for ${track.name}`}
-        className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28
+        className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28 rounded-lg
                    transition-transform duration-200 ease-in-out hover:scale-110"
       />
       <div className="flex flex-col justify-center ml-2 sm:ml-4 lg:ml-6">
@@ -69,66 +69,29 @@ const DashboardPage = () => {
   const [error, setError] = useState(null);
 
   const [topTracks, setTopTracks] = useState([]);
-
   const [topArtists, setTopArtists] = useState([]);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`/api/spotify/user`);
+        const [userRes, tracksRes, artistsRes, audioRes] = await Promise.all([
+          fetch(`/api/spotify/user`),
+          fetch(`/api/spotify/top-tracks`),
+          fetch(`/api/spotify/top-artists`),
+        ]);
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "Failed to fetch user data.");
-        }
-
-        const data = await response.json();
-        setUserData(data);
+        setUserData(await userRes.json());
+        setTopTracks(await tracksRes.json());
+        setTopArtists(await artistsRes.json());
       } catch (e) {
-        console.error("Error fetching user data:", e);
-        setError(e.message || "An unexpected error occured.");
+        console.error("Error fetching data:", e);
+        setError("An unexpected error occurred. Please try again.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUserData();
-  }, []);
-
-  useEffect(() => {
-    const fetchTopTracks = async () => {
-      try {
-        const response = await fetch(`/api/spotify/top-tracks`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "Failed to fetch top tracks.");
-        }
-        const data = await response.json();
-        setTopTracks(data);
-      } catch (e) {
-        console.error("Error fetching top tracks:", e);
-      }
-    };
-
-    fetchTopTracks();
-  }, []);
-
-  useEffect(() => {
-    const fetchTopArtists = async () => {
-      try {
-        const response = await fetch(`api/spotify/top-artists`);
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "Failed to fetch top artists.");
-        }
-        const data = await response.json();
-        setTopArtists(data);
-      } catch (e) {
-        console.error("Error fetching top artists:", e);
-      }
-    };
-
-    fetchTopArtists();
+    fetchData();
   }, []);
 
   if (loading) {
