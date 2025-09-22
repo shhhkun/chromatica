@@ -8,13 +8,6 @@ const percentageToDegrees = (percentage) => {
   return (percentage / 100) * 360;
 };
 
-/* 
-  lg:      32 36
-  md:      24 28
-  sm:      20 24
-  default: 16 20
-*/
-
 const CircularProgressBar = ({ percentage, label, color }) => {
   const degrees = percentageToDegrees(percentage);
 
@@ -52,7 +45,8 @@ const TrackCard = ({ track }) => {
       <img
         src={track.albumArtUrl}
         alt={`Album art for ${track.name}`}
-        className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28"
+        className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-28 lg:h-28
+                   transition-transform duration-200 ease-in-out hover:scale-110"
       />
       <div className="flex flex-col justify-center ml-2 sm:ml-4 lg:ml-6">
         <p className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">
@@ -75,6 +69,8 @@ const DashboardPage = () => {
   const [error, setError] = useState(null);
 
   const [topTracks, setTopTracks] = useState([]);
+
+  const [topArtists, setTopArtists] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -117,6 +113,24 @@ const DashboardPage = () => {
     fetchTopTracks();
   }, []);
 
+  useEffect(() => {
+    const fetchTopArtists = async () => {
+      try {
+        const response = await fetch(`api/spotify/top-artists`);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to fetch top artists.");
+        }
+        const data = await response.json();
+        setTopArtists(data);
+      } catch (e) {
+        console.error("Error fetching top artists:", e);
+      }
+    };
+
+    fetchTopArtists();
+  }, []);
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -155,7 +169,7 @@ const DashboardPage = () => {
               src={userData.profileImageUrl}
               alt="Spotify Profile"
               fill
-              className="object-cover"
+              className="object-cover transition-transform duration-200 ease-in-out hover:scale-110"
             />
           </div>
         )}
@@ -231,7 +245,7 @@ const DashboardPage = () => {
           {/* Track Cards */}
           <div className="space-y-3 sm:space-y-5 lg:space-y-6">
             {topTracks.length > 0 ? (
-              topTracks.map((track, index) => (
+              topTracks.slice(0, 5).map((track, index) => (
                 <div key={index}>
                   <TrackCard track={track} />
                 </div>
@@ -251,7 +265,29 @@ const DashboardPage = () => {
           <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 md:mb-4 lg:mb-6 font-bold">
             Your Top Artists
           </h2>
-          {/* Top Aritsts */}
+          {/* Artist Cards */}
+          <div className="flex flex-row">
+            {topArtists.length > 0 ? (
+              topArtists.slice(0, 5).map((artist, index) => (
+                <div
+                  key={index}
+                  className="relative transition-transform duration-200 ease-in-out hover:scale-110"
+                  style={{
+                    zIndex: 5 - index,
+                    marginLeft: index > 0 ? "-20px" : "0px",
+                  }}
+                >
+                  <img
+                    src={artist.artistImageUrl}
+                    alt={artist.name}
+                    className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-full"
+                  />
+                </div>
+              ))
+            ) : (
+              <p>No top artists found</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
