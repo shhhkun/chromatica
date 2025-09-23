@@ -21,7 +21,7 @@ const Select = ({ value, onChange }) => {
           className="
             inline-flex justify-center items-center px-4 py-2 text-sm sm:text-base lg:text-lg font-bold
             rounded-lg
-            focus:outline-none focus:ring-4 focus:ring-[#1DB954]
+            focus:outline-none focus:ring-3 focus:ring-[#1DB954]
             transition-colors duration-200
           "
           style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
