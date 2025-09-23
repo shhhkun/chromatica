@@ -2,17 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { Vibrant } from "node-vibrant/browser";
 import Button from "../components/Button.jsx";
 import Select from "../components/Select.jsx";
 import VibePaletteCard from "../components/VibePaletteCard.jsx";
 import AudioProfileCard from "../components/AudioProfileCard.jsx";
 import TopTracksCard from "../components/TopTracksCard.jsx";
 import TopArtistsCard from "../components/TopArtistsCard.jsx";
-
-import { Vibrant } from "node-vibrant/browser";
-
 import Particles from "../components/Particles.jsx";
+import Menu from "../components/Menu.jsx";
 
 async function getVibePalette(imageUrl) {
   if (!imageUrl) {
@@ -30,8 +29,6 @@ async function getVibePalette(imageUrl) {
 }
 
 const DashboardPage = () => {
-  // hook to read the information in the URL
-  const searchParams = useSearchParams();
   // hook to change pages, like redirect to login page
   const router = useRouter();
 
@@ -151,7 +148,7 @@ const DashboardPage = () => {
           {userData.profileImageUrl && (
             <div
               className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden 
-                       my-4 mr-4 sm:my-8 sm:mr-8 md:my-10 md:mr-10 lg:my-12 lg:mr-12"
+                       my-4 mr-4 sm:my-8 sm:mr-8 md:my-10 md:mr-10 lg:my-12 lg:mr-12 flex-shrink-0"
             >
               <Image
                 src={userData.profileImageUrl}
@@ -161,9 +158,14 @@ const DashboardPage = () => {
               />
             </div>
           )}
-          <h1 className="flex items-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
-            Welcome, {userData.displayName}.
-          </h1>
+          <div className="flex justify-between w-full">
+            <h1 className="flex items-center text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
+              Welcome, {userData.displayName}.
+            </h1>
+            <div className="my-4 sm:my-8 md:my-10 lg:my-12">
+              <Menu weight="bold" />
+            </div>
+          </div>
         </div>
         <div className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54 gap-3 sm:gap-5 md:gap-7 lg:gap-8">
           {tabs.map((tab) => (
