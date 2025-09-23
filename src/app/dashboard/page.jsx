@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import Button from "../components/Button.jsx";
+import Select from "../components/Select.jsx";
 import VibePaletteCard from "../components/VibePaletteCard.jsx";
 import AudioProfileCard from "../components/AudioProfileCard.jsx";
 import TopTracksCard from "../components/TopTracksCard.jsx";
@@ -46,6 +47,8 @@ const DashboardPage = () => {
 
   const [particleColors, setParticleColors] = useState([]);
 
+  const [timeframe, setTimeframe] = useState("medium_term");
+
   const tabContent = {
     Overview: [
       <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
@@ -64,10 +67,14 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // build the query string for the timeframe
+        const params = new URLSearchParams({ time_range: timeframe });
+        const queryString = params.toString();
+
         const [userRes, tracksRes, artistsRes] = await Promise.all([
           fetch(`/api/spotify/user`),
-          fetch(`/api/spotify/top-tracks`),
-          fetch(`/api/spotify/top-artists`),
+          fetch(`/api/spotify/top-tracks?${queryString}`),
+          fetch(`/api/spotify/top-artists?${queryString}`),
         ]);
 
         const tracksData = await tracksRes.json();
@@ -107,7 +114,7 @@ const DashboardPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [timeframe]);
 
   if (loading) {
     return (
@@ -168,6 +175,10 @@ const DashboardPage = () => {
             />
           ))}
         </div>
+      </div>
+
+      <div className="pt-8 sm:pt-10 md:pt-12 lg:pt-18 z-20">
+        <Select value={timeframe} onChange={setTimeframe} />
       </div>
 
       {/* Cards Wrapper */}

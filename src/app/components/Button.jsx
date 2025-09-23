@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Button = ({ text, isActive, onClick }) => {
   return (
@@ -14,7 +14,7 @@ const Button = ({ text, isActive, onClick }) => {
       {/* Green active effect */}
       <div
         className={`absolute bottom-0 left-0 w-full h-1 bg-[#1DB954] transition-all duration-200 ${
-          isActive ? 'scale-x-100' : 'scale-x-0'
+          isActive ? "scale-x-100" : "scale-x-0"
         }`}
       />
     </button>

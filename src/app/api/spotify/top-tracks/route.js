@@ -11,6 +11,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   try {
+    // Read the 'time_range' query parameter from the URL, if not present default to medium_term
+    const { searchParams } = new URL(request.url);
+    const time_range = searchParams.get("time_range") || "medium_term";
+
     // Step 1: Authenticate the user using the secure session token from the cookie.
     const allCookies = await cookies();
     const sessionToken = allCookies.get("sessionToken")?.value;
@@ -76,7 +80,7 @@ export async function GET(request) {
 
     // Step 3: Use access token to get the users top tracks.
     const topTracksResponse = await fetch(
-      "https://api.spotify.com/v1/me/top/tracks",
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${time_range}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

@@ -12,11 +12,10 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+  width: none;
   background-color: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #c27012;
-  border-radius: 8px;
+  background-color: transparent;
 }
