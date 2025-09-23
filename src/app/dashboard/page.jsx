@@ -140,7 +140,7 @@ const DashboardPage = () => {
         className="flex flex-col w-full z-10"
         style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
       >
-        <div className="flex flex-row w-full px-4 sm:px-30 md:px-36 lg:px-54">
+        <div className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54">
           {userData.profileImageUrl && (
             <div
               className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden 
@@ -158,7 +158,7 @@ const DashboardPage = () => {
             Welcome, {userData.displayName}.
           </h1>
         </div>
-        <div className="flex flex-row w-full px-4 sm:px-30 md:px-36 lg:px-54 gap-3 sm:gap-5 md:gap-7 lg:gap-8">
+        <div className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54 gap-3 sm:gap-5 md:gap-7 lg:gap-8">
           {tabs.map((tab) => (
             <Button
               key={tab}
