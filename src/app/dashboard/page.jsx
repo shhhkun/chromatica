@@ -11,6 +11,8 @@ import TopArtistsCard from "../components/TopArtistsCard.jsx";
 
 import { Vibrant } from "node-vibrant/browser";
 
+import Particles from "../components/Particles.jsx";
+
 async function getVibePalette(imageUrl) {
   if (!imageUrl) {
     return null;
@@ -42,14 +44,18 @@ const DashboardPage = () => {
   const tabs = ["Overview", "Palette", "Audio", "Tracks", "Artists"];
   const [activeTab, setActiveTab] = useState("Overview");
 
+  const [particleColors, setParticleColors] = useState([]);
+
   const tabContent = {
     Overview: [
-      <VibePaletteCard key="palette" palettes={topTracks} />,
+      <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
       <AudioProfileCard key="audio" />,
-      <TopTracksCard key="tracks" topTracks={topTracks} />,
+      <TopTracksCard key="tracks" topTracks={topTracks.slice(0, 5)} />,
       <TopArtistsCard key="artists" topArtists={topArtists} />,
     ],
-    Palette: [<VibePaletteCard key="palette" palettes={topTracks} />],
+    Palette: [
+      <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
+    ],
     Audio: [<AudioProfileCard key="audio" />],
     Tracks: [<TopTracksCard key="tracks" topTracks={topTracks} />],
     Artists: [<TopArtistsCard key="artists" topArtists={topArtists} />],
@@ -72,16 +78,26 @@ const DashboardPage = () => {
             const palette = await getVibePalette(track.albumArtUrl);
             return {
               name: track.name,
+              artist: track.artist,
               albumArtUrl: track.albumArtUrl,
-              artist: track.arist,
               palette,
             };
           })
         );
 
+        // extract particle colors
+        const newParticleColors = palettes.slice(0, 3).flatMap((track) => {
+          return [
+            track.palette?.Vibrant?.hex,
+            track.palette?.DarkVibrant?.hex,
+            track.palette?.Muted?.hex,
+          ].filter(Boolean); // filter undefined colors incase
+        });
+
         setUserData(await userRes.json());
         setTopTracks(palettes);
         setTopArtists(await artistsRes.json());
+        setParticleColors(newParticleColors);
       } catch (e) {
         console.error("Error fetching data:", e);
         setError("An unexpected error occurred. Please try again.");
@@ -117,10 +133,12 @@ const DashboardPage = () => {
 
   return (
     <div className="flex flex-col items-center min-h-screen">
+      <Particles colors={particleColors} opacity={0.5} />
+
       {/* Header */}
       <div
-        className="flex flex-col w-full"
-        style={{ backgroundColor: "#1E1E1E" }}
+        className="flex flex-col w-full z-10"
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
       >
         <div className="flex flex-row w-full px-4 sm:px-30 md:px-36 lg:px-54">
           {userData.profileImageUrl && (
@@ -153,7 +171,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Cards Wrapper */}
-      <div className="flex flex-col w-full px-0 py-8 sm:py-10 md:py-12 lg:py-18">
+      <div className="flex flex-col w-full px-0 py-8 sm:py-10 md:py-12 lg:py-18 z-10">
         {tabContent[activeTab]}
       </div>
     </div>

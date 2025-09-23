@@ -37,7 +37,7 @@ const TopTracksCard = ({ topTracks }) => {
       {/* Track Cards */}
       <div className="space-y-3 sm:space-y-5 lg:space-y-6">
         {topTracks.length > 0 ? (
-          topTracks.slice().map((track, index) => (
+          topTracks.map((track, index) => (
             <div key={index}>
               <TrackCard
                 track={track}
