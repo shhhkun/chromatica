@@ -64,7 +64,7 @@ const Menu = ({ weight, handleLogout, theme, setTheme }) => {
           <div aria-orientation="vertical">
             <button
               onClick={handleLogout}
-              className="block w-full text-center px-4 py-2 text-sm sm:text-base lg:text-lg font-bold hover:bg-[var(--hover)] transition-colors duration-200"
+              className="block w-full text-center rounded-lg px-4 py-2 text-sm sm:text-base lg:text-lg font-bold hover:bg-[var(--hover)] transition-colors duration-200"
             >
               Log Out
             </button>

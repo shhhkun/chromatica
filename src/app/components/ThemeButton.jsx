@@ -11,7 +11,7 @@ const ThemeButton = ({ theme, setTheme }) => {
 
   return (
     <button
-      className="block w-full text-center px-4 py-2 text-sm sm:text-base lg:text-lg font-bold hover:bg-[var(--hover)] transition-colors duration-200"
+      className="block w-full px-4 py-2 text-center rounded-lg text-sm sm:text-base lg:text-lg font-bold hover:bg-[var(--hover)] transition-colors duration-200"
       onClick={() => {
         toggleTheme();
       }}

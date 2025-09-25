@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Select = ({ value, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +12,18 @@ const Select = ({ value, onChange }) => {
     onChange(key);
     setIsOpen(false);
   };
+
+  // close the menu if a click occurs outside of it
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      const menuDiv = event.target.closest(".relative");
+      if (isOpen && !menuDiv) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("click", handleOutsideClick);
+    return () => window.removeEventListener("click", handleOutsideClick);
+  }, [isOpen]);
 
   return (
     <div className="relative inline-block text-center">
@@ -50,7 +62,6 @@ const Select = ({ value, onChange }) => {
           style={{ backgroundColor: "var(--cardbg)" }}
         >
           <div
-            className="py-1"
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
@@ -60,7 +71,7 @@ const Select = ({ value, onChange }) => {
                 key={key}
                 href="#"
                 onClick={() => handleSelect(key)}
-                className="block px-4 py-2 text-sm sm:text-base lg:text-lg font-bold text-center hover:bg-[var(--hover)] transition-colors duration-200"
+                className="block px-4 py-2 rounded-lg text-sm sm:text-base lg:text-lg font-bold text-center hover:bg-[var(--hover)] transition-colors duration-200"
                 role="menuitem"
               >
                 {label}

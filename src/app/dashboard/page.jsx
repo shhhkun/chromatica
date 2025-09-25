@@ -141,7 +141,9 @@ const DashboardPage = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <p className="text-xl font-bold animate-pulse">Loading profile...</p>
+        <p className="text-base sm:text-lg lg:text-xl font-bold animate-pulse">
+          Loading profile...
+        </p>
       </div>
     );
   }
@@ -149,9 +151,11 @@ const DashboardPage = () => {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
-        <p className="text-xl font-bold mb-4">Error: {error}</p>
+        <p className="text-base sm:text-lg lg:text-xl font-bold mb-4">
+          Error: {error}
+        </p>
         <button
-          className="px-6 py-3 rounded-full font-bold"
+          className="px-4 py-2 rounded-lg cursor-pointer text-sm sm:text-base lg:text-lg font-bold bg-[var(--cardbg)] hover:bg-[var(--hover)] transition-colors duration-200]"
           onClick={() => router.push("/")}
         >
           Back to Login
