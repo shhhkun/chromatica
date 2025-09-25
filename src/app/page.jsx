@@ -42,9 +42,7 @@ const Page = () => {
     <main className="flex flex-col justify-center items-center min-h-screen">
       <Particles colors={particleColors} opacity={0.5} />
       <div className="relative flex flex-col items-center">
-        <h1
-          className="absolute -top-14 sm:-top-18 lg:-top-20 text-2xl sm:text-3xl lg:text-4xl p-2 sm:p-4 lg:pd-6 font-bold"
-        >
+        <h1 className="absolute -top-14 sm:-top-18 lg:-top-20 text-3xl sm:text-4xl lg:text-5xl p-2 sm:p-4 lg:pd-6 font-bold">
           Chromatica
         </h1>
         <button
@@ -53,6 +51,9 @@ const Page = () => {
           disabled={loading}
         >
           {loading ? "Redirecting..." : "Login with Spotify"}
+        </button>
+        <button className="mt-4 px-4 py-2 rounded-lg cursor-pointer text-sm sm:text-base lg:text-lg font-bold bg-[var(--cardbg)] hover:bg-[var(--hover)] transition-colors duration-200]">
+          Live Demo
         </button>
       </div>
     </main>
