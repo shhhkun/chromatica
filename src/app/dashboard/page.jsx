@@ -7,7 +7,6 @@ import { Vibrant } from "node-vibrant/browser";
 import Button from "../components/Button.jsx";
 import Select from "../components/Select.jsx";
 import VibePaletteCard from "../components/VibePaletteCard.jsx";
-import AudioProfileCard from "../components/AudioProfileCard.jsx";
 import TopTracksCard from "../components/TopTracksCard.jsx";
 import TopArtistsCard from "../components/TopArtistsCard.jsx";
 import Particles from "../components/Particles.jsx";
@@ -46,17 +45,24 @@ const DashboardPage = () => {
 
   const [timeframe, setTimeframe] = useState("medium_term");
 
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    setTheme(prefersDark ? "dark" : "light");
+  }, []);
+
   const tabContent = {
     Overview: [
       <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
-      //Audio: [<AudioProfileCard key="audio" />],
       <TopTracksCard key="tracks" topTracks={topTracks.slice(0, 5)} />,
       <TopArtistsCard key="artists" topArtists={topArtists} />,
     ],
     Palette: [
       <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
     ],
-    //Audio: [<AudioProfileCard key="audio" />],
     Tracks: [<TopTracksCard key="tracks" topTracks={topTracks} />],
     Artists: [<TopArtistsCard key="artists" topArtists={topArtists} />],
   };
@@ -161,7 +167,7 @@ const DashboardPage = () => {
       {/* Header */}
       <div
         className="flex flex-col w-full z-10"
-        style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+        style={{ backgroundColor: "var(--cardbg)" }}
       >
         <div className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54">
           {userData.profileImageUrl && (
@@ -182,7 +188,12 @@ const DashboardPage = () => {
               Welcome, {userData.displayName}.
             </h1>
             <div className="my-4 sm:my-8 md:my-10 lg:my-12">
-              <Menu weight="bold" handleLogout={handleLogout} />
+              <Menu
+                weight="bold"
+                handleLogout={handleLogout}
+                theme={theme}
+                setTheme={setTheme}
+              />
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ListIcon } from "@phosphor-icons/react";
+import ThemeButton from "./ThemeButton.jsx";
 
 // hook to track window width
 const useWindowWidth = () => {
@@ -17,7 +18,7 @@ const useWindowWidth = () => {
   return windowWidth;
 };
 
-const Menu = ({ weight, handleLogout }) => {
+const Menu = ({ weight, handleLogout, theme, setTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const windowWidth = useWindowWidth();
 
@@ -58,15 +59,16 @@ const Menu = ({ weight, handleLogout }) => {
       {isOpen && (
         <div
           className="absolute right-0 mt-2 rounded-lg w-max"
-          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+          style={{ backgroundColor: "var(--cardbg)" }}
         >
           <div aria-orientation="vertical">
             <button
               onClick={handleLogout}
-              className="block w-full text-right px-4 py-2 text-sm sm:text-base lg:text-lg font-bold hover:bg-[#4a4a4a] transition-colors duration-200"
+              className="block w-full text-center px-4 py-2 text-sm sm:text-base lg:text-lg font-bold hover:bg-[var(--hover)] transition-colors duration-200"
             >
               Log Out
             </button>
+            <ThemeButton theme={theme} setTheme={setTheme} />
           </div>
         </div>
       )}

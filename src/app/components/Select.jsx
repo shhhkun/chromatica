@@ -21,10 +21,10 @@ const Select = ({ value, onChange }) => {
           className="
             inline-flex justify-center items-center px-4 py-2 text-sm sm:text-base lg:text-lg font-bold
             rounded-lg
-            focus:outline-none focus:ring-3 focus:ring-[#1DB954]
+            focus:outline-none focus:ring-3 focus:ring-[var(--accent)]
             transition-colors duration-200
           "
-          style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+          style={{ backgroundColor: "var(--cardbg)" }}
           onClick={() => setIsOpen(!isOpen)}
         >
           {options[value]}
@@ -46,8 +46,8 @@ const Select = ({ value, onChange }) => {
 
       {isOpen && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg focus:outline-none z-30 w-max"
-          style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+          className="absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg z-30 w-max"
+          style={{ backgroundColor: "var(--cardbg)" }}
         >
           <div
             className="py-1"
@@ -60,7 +60,7 @@ const Select = ({ value, onChange }) => {
                 key={key}
                 href="#"
                 onClick={() => handleSelect(key)}
-                className="block px-4 py-2 text-sm sm:text-base lg:text-lg font-bold text-center hover:bg-[#4a4a4a] transition-colors duration-200"
+                className="block px-4 py-2 text-sm sm:text-base lg:text-lg font-bold text-center hover:bg-[var(--hover)] transition-colors duration-200"
                 role="menuitem"
               >
                 {label}

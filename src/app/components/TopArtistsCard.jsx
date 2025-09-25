@@ -3,7 +3,7 @@ const TopArtistsCard = ({ topArtists }) => {
     <div
       className="flex flex-col p-4 sm:p-6 lg:p-8
                      mx-0 sm:mx-24 md:mx-30 lg:mx-54 rounded-none sm:rounded-2xl md:rounded-3xl lg:rounded-4xl"
-      style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+      style={{ backgroundColor: "var(--cardbg)" }}
     >
       <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl mb-2 md:mb-4 lg:mb-6 font-bold">
         Your Top Artists

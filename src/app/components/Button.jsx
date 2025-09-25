@@ -9,11 +9,11 @@ const Button = ({ text, isActive, onClick }) => {
       <span className="relative z-10">{text}</span>
       {/* Grey hover effect */}
       <div
-        className={`absolute bottom-0 left-0 w-full h-1 bg-transparent transform scale-x-0 transition-all duration-200 group-hover:bg-[#4a4a4a] group-hover:scale-x-100`}
+        className={`absolute bottom-0 left-0 w-full h-1 bg-transparent transform scale-x-0 transition-all duration-200 group-hover:bg-[var(--hover)] group-hover:scale-x-100`}
       />
       {/* Green active effect */}
       <div
-        className={`absolute bottom-0 left-0 w-full h-1 bg-[#1DB954] transition-all duration-200 ${
+        className={`absolute bottom-0 left-0 w-full h-1 bg-[var(--accent)] transition-all duration-200 ${
           isActive ? "scale-x-100" : "scale-x-0"
         }`}
       />
