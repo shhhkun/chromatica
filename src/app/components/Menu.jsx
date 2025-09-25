@@ -17,8 +17,21 @@ const useWindowWidth = () => {
   return windowWidth;
 };
 
-const Menu = ({ weight }) => {
+const Menu = ({ weight, handleLogout }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const windowWidth = useWindowWidth();
+
+  // close the menu if a click occurs outside of it
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      const menuDiv = event.target.closest(".relative");
+      if (isOpen && !menuDiv) {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("click", handleOutsideClick);
+    return () => window.removeEventListener("click", handleOutsideClick);
+  }, [isOpen]);
 
   // function to determine icon size based on breakpoints
   const getIconSize = () => {
@@ -34,7 +47,31 @@ const Menu = ({ weight }) => {
     return 28; // default
   };
 
-  return <ListIcon size={getIconSize()} weight={weight} />;
+  return (
+    <div className="relative">
+      <div>
+        <button onClick={() => setIsOpen((prev) => !prev)}>
+          <ListIcon size={getIconSize()} weight={weight} />
+        </button>
+      </div>
+
+      {isOpen && (
+        <div
+          className="absolute right-0 mt-2 rounded-lg w-max"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
+        >
+          <div aria-orientation="vertical">
+            <button
+              onClick={handleLogout}
+              className="block w-full text-right px-4 py-2 text-sm sm:text-base lg:text-lg font-bold hover:bg-[#4a4a4a] transition-colors duration-200"
+            >
+              Log Out
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Menu;

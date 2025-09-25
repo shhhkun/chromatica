@@ -39,7 +39,7 @@ const DashboardPage = () => {
   const [topTracks, setTopTracks] = useState([]);
   const [topArtists, setTopArtists] = useState([]);
 
-  const tabs = ["Overview", "Palette", "Audio", "Tracks", "Artists"];
+  const tabs = ["Overview", "Palette", "Tracks", "Artists"]; // removed Audio (possibly readd)
   const [activeTab, setActiveTab] = useState("Overview");
 
   const [particleColors, setParticleColors] = useState([]);
@@ -49,16 +49,35 @@ const DashboardPage = () => {
   const tabContent = {
     Overview: [
       <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
-      <AudioProfileCard key="audio" />,
+      //Audio: [<AudioProfileCard key="audio" />],
       <TopTracksCard key="tracks" topTracks={topTracks.slice(0, 5)} />,
       <TopArtistsCard key="artists" topArtists={topArtists} />,
     ],
     Palette: [
       <VibePaletteCard key="palette" palettes={topTracks.slice(0, 3)} />,
     ],
-    Audio: [<AudioProfileCard key="audio" />],
+    //Audio: [<AudioProfileCard key="audio" />],
     Tracks: [<TopTracksCard key="tracks" topTracks={topTracks} />],
     Artists: [<TopArtistsCard key="artists" topArtists={topArtists} />],
+  };
+
+  // function to logout & redirect (route) to home page
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/spotify/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        router.push("/");
+      } else {
+        console.error("Logout failed on the server.");
+        alert("Logout failed. Please try again.");
+      }
+    } catch (e) {
+      console.error("Error during logout:", e);
+      alert("An error occurred during logout. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -163,7 +182,7 @@ const DashboardPage = () => {
               Welcome, {userData.displayName}.
             </h1>
             <div className="my-4 sm:my-8 md:my-10 lg:my-12">
-              <Menu weight="bold" />
+              <Menu weight="bold" handleLogout={handleLogout} />
             </div>
           </div>
         </div>
