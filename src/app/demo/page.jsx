@@ -25,18 +25,15 @@ const hexToRgb = (hex) => {
 
 const demoPalettes = [
   {
-    // bodies
-    LightVibrant: "#c7c7b1",
+    LightVibrant: "#c7c7b1", // bodies
     DarkVibrant: "#4d4d37",
   },
   {
-    // ocean blues
-    LightVibrant: "#91c3f4",
+    LightVibrant: "#91c3f4", // ocean blues
     DarkVibrant: "#055b98",
   },
   {
-    // used to me
-    LightVibrant: "#c7a1d7",
+    LightVibrant: "#c7a1d7", // used to me
     DarkVibrant: "#1c2444",
   },
 ];
@@ -66,34 +63,124 @@ const demoArtists = [
 
 const demoTracks = [
   {
-    name: "Bodies",
+    name: "Bodies", // 1
     albumArtUrl: "/bodies.jfif",
     artist: "keshi",
     bgColor: { rgb: hexToRgb("#8c8474") },
   },
   {
-    name: "ocean blues",
+    name: "ocean blues", // 2
     albumArtUrl: "/oceanblues.jfif",
     artist: "demxntia",
     bgColor: { rgb: hexToRgb("#6e8ca0") },
   },
   {
-    name: "Used To Me",
+    name: "Used To Me", // 3
     albumArtUrl: "/usedtome.jfif",
     artist: "Luke Chiang",
     bgColor: { rgb: hexToRgb("#655d9c") },
   },
   {
-    name: "Guilty",
+    name: "Guilty", // 4
     albumArtUrl: "/guilty.jfif",
     artist: "Dynamicduo",
     bgColor: { rgb: hexToRgb("#a07150") },
   },
   {
-    name: "Never Tell",
+    name: "Never Tell", // 5
     albumArtUrl: "/nevertell.jfif",
     artist: "Luke Chiang",
     bgColor: { rgb: hexToRgb("#6184a4") },
+  },
+  {
+    name: "BRB", // 6
+    albumArtUrl: "/brb.jfif",
+    artist: "Epik High",
+    bgColor: { rgb: hexToRgb("#848474") },
+  },
+  {
+    name: "From the Rain (Feat. Ahn Ye Eun)", // 7
+    albumArtUrl: "/fromtherain.jfif",
+    artist: "Heize, Ahn Ye Eun",
+    bgColor: { rgb: hexToRgb("#975355") },
+  },
+  {
+    name: "One Summer Day", // 8
+    albumArtUrl: "/onesummerday.jfif",
+    artist: "Joe Hisaishi",
+    bgColor: { rgb: hexToRgb("#948067") },
+  },
+  {
+    name: "in your arms", // 9
+    albumArtUrl: "/inyourarms.jfif",
+    artist: "Saib",
+    bgColor: { rgb: hexToRgb("#5e9570") },
+  },
+  {
+    name: "HOME IS FAR AWAY", // 10
+    albumArtUrl: "/homeisfaraway.jfif",
+    artist: "Epik High, OHHYUK",
+    bgColor: { rgb: hexToRgb("#8c8c8c") },
+  },
+  {
+    name: "11월1일 (feat. 김재석)", // 11
+    albumArtUrl: "/nov1st.jfif",
+    artist: "Epik High, 김재석",
+    bgColor: { rgb: hexToRgb("#9c7464") },
+  },
+  {
+    name: "Some", // 12
+    albumArtUrl: "/some.jfif",
+    artist: "BOL4",
+    bgColor: { rgb: hexToRgb("#a48c64") },
+  },
+  {
+    name: "ghosts", // 13
+    albumArtUrl: "/ghosts.jfif",
+    artist: "Heiakim, Sachi Gomez",
+    bgColor: { rgb: hexToRgb("#8f7268") },
+  },
+  {
+    name: "MISSING U", // 14
+    albumArtUrl: "/missingu.jfif",
+    artist: "LeeHi",
+    bgColor: { rgb: hexToRgb("#a47c54") },
+  },
+  {
+    name: "bittersweet", // 15
+    albumArtUrl: "/bittersweet.jfif",
+    artist: "Sarah Kang, Luke Chiang",
+    bgColor: { rgb: hexToRgb("#8c7455") },
+  },
+  {
+    name: "light", // 16
+    albumArtUrl: "/light.jfif",
+    artist: "wave to earth",
+    bgColor: { rgb: hexToRgb("#7987aa") },
+  },
+  {
+    name: "if it's not you", // 17
+    albumArtUrl: "/ifitsnotyou.jfif",
+    artist: "PRYVT",
+    bgColor: { rgb: hexToRgb("#747c84") },
+  },
+  {
+    name: "Loving You From A Distance", // 18
+    albumArtUrl: "/lovingyoufromadistance.jfif",
+    artist: "jomm, readyaimfire27",
+    bgColor: { rgb: hexToRgb("#784d86") },
+  },
+  {
+    name: "Reminiscence", // 19
+    albumArtUrl: "/reminiscence.jfif",
+    artist: "Vanilla Mood",
+    bgColor: { rgb: hexToRgb("#a99e57") },
+  },
+  {
+    name: "Rain - Long Ver.", // 20
+    albumArtUrl: "/rain.jfif",
+    artist: "Motohiro Hata",
+    bgColor: { rgb: hexToRgb("#539f5a") },
   },
 ];
 
@@ -102,15 +189,15 @@ const DemoPage = () => {
   const router = useRouter();
 
   const particleColors = [
-    "#E57373", // red
-    "#FFB74D", // orange
-    "#FFF176", // yellow
-    "#81C784", // green
-    "#64B5F6", // blue
-    "#7986CB", // indigo
-    "#9575CD", // violet
-    "#F06292", // pink
-    "#FFD54F", // amber
+    "#8c8474", // bodies
+    "#6e8ca0", // ocean blues
+    "#655d9c", // used to me
+    "#a07150", // guilty
+    "#6184a4", // never tell
+    "#5e9570", // in your arms
+    "#a99e57", // reminiscence
+    "#784d86", // loving you from a distance
+    "#975355", // from the rain
   ];
 
   const tabs = ["Overview", "Palette", "Tracks", "Artists"]; // removed Audio (possibly readd)
@@ -129,12 +216,24 @@ const DemoPage = () => {
 
   const tabContent = {
     Overview: [
-      <VibePaletteCard key="palette" palettes={demoPalettes} demo={true} />,
-      <TopTracksCard key="tracks" topTracks={demoTracks} demo={true} />,
+      <VibePaletteCard
+        key="palette"
+        palettes={demoPalettes.slice(0, 3)}
+        demo={true}
+      />,
+      <TopTracksCard
+        key="tracks"
+        topTracks={demoTracks.slice(0, 5)}
+        demo={true}
+      />,
       <TopArtistsCard key="artists" topArtists={demoArtists} />,
     ],
     Palette: [
-      <VibePaletteCard key="palette" palettes={demoPalettes} demo={true} />,
+      <VibePaletteCard
+        key="palette"
+        palettes={demoPalettes.slice(0, 3)}
+        demo={true}
+      />,
     ],
     Tracks: [<TopTracksCard key="tracks" topTracks={demoTracks} demo={true} />],
     Artists: [<TopArtistsCard key="artists" topArtists={demoArtists} />],
