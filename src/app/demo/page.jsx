@@ -98,7 +98,7 @@ const demoTracks = [
   },
 ];
 
-const DashboardPage = () => {
+const DemoPage = () => {
   // hook to change pages, like redirect to login page
   const router = useRouter();
 
@@ -205,4 +205,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default DemoPage;
