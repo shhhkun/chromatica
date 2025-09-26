@@ -28,6 +28,12 @@ const Page = () => {
     window.location.href = "/api/spotify/auth";
   };
 
+  const handleDemoLogin = () => {
+    setLoading(true);
+    // redirect to "live demo" page of dashboard
+    window.location.href = "/demo";
+  };
+
   if (loading) {
     return (
       <main className="flex justify-center items-center min-h-screen">
@@ -52,7 +58,11 @@ const Page = () => {
         >
           {loading ? "Redirecting..." : "Login with Spotify"}
         </button>
-        <button className="mt-4 px-4 py-2 rounded-lg cursor-pointer text-sm sm:text-base lg:text-lg font-bold bg-[var(--cardbg)] hover:bg-[var(--hover)] transition-colors duration-200]">
+        <button
+          className="mt-4 px-4 py-2 rounded-lg cursor-pointer text-sm sm:text-base lg:text-lg font-bold bg-[var(--cardbg)] hover:bg-[var(--hover)] transition-colors duration-200]"
+          onClick={handleDemoLogin}
+          disabled={loading}
+        >
           Live Demo
         </button>
       </div>

@@ -4,7 +4,7 @@ const TrackCard = ({ track, bgColor }) => {
       className="flex flex-row p-2 sm:p-4 lg:p-6 rounded-lg"
       style={{
         backgroundColor: bgColor?.rgb
-          ? `rgba(${bgColor.rgb[0]}, ${bgColor.rgb[1]}, ${bgColor.rgb[2]}, 0.2)`
+          ? `rgba(${bgColor.rgb[0]}, ${bgColor.rgb[1]}, ${bgColor.rgb[2]}, 0.2)` // 0.2
           : `var(--cardbg)`,
       }}
     >
@@ -24,7 +24,7 @@ const TrackCard = ({ track, bgColor }) => {
   );
 };
 
-const TopTracksCard = ({ topTracks }) => {
+const TopTracksCard = ({ topTracks, demo }) => {
   return (
     <div
       className="flex flex-col p-4 sm:p-6 lg:p-8 mb-8 sm:mb-10 md:mb-12 lg:mb-18
@@ -41,7 +41,7 @@ const TopTracksCard = ({ topTracks }) => {
             <div key={index}>
               <TrackCard
                 track={track}
-                bgColor={track.palette?.Muted}
+                bgColor={demo ? track.bgColor : track.palette?.Muted}
               />
             </div>
           ))

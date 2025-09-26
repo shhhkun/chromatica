@@ -1,4 +1,4 @@
-const VibePaletteCard = ({ palettes }) => {
+const VibePaletteCard = ({ palettes, demo }) => {
   return (
     <div
       className="flex flex-col p-4 sm:p-6 lg:p-8 mb-8 sm:mb-10 md:mb-12 lg:mb-18
@@ -16,8 +16,16 @@ const VibePaletteCard = ({ palettes }) => {
               className="aspect-square w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-32 lg:h-32 rounded-lg"
               style={{
                 backgroundImage: `linear-gradient(to top right, 
-                                    ${track.palette?.LightVibrant?.hex}, 
-                                    ${track.palette?.DarkVibrant?.hex})`,
+                                  ${
+                                    demo
+                                      ? track.LightVibrant
+                                      : track.palette?.LightVibrant?.hex
+                                  }, 
+                                  ${
+                                    demo
+                                      ? track.DarkVibrant
+                                      : track.palette?.DarkVibrant?.hex
+                                  })`,
               }}
             ></div>
           ))
