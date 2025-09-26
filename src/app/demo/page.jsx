@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Button from "../components/Button.jsx";
 import Select from "../components/Select.jsx";
@@ -157,13 +156,12 @@ const DemoPage = () => {
       >
         <div className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54">
           <div
-            className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden 
+            className="flex items-center relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden 
                        my-4 mr-4 sm:my-8 sm:mr-8 md:my-10 md:mr-10 lg:my-12 lg:mr-12 flex-shrink-0"
           >
-            <Image
-              src="/guilty.jfif"
+            <img
+              src="/bear.png"
               alt="Spotify Profile"
-              fill
               className="object-cover transition-transform duration-200 ease-in-out hover:scale-110"
             />
           </div>
