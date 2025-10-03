@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Vibrant } from "node-vibrant/browser";
@@ -53,6 +53,30 @@ const DashboardPage = () => {
     ).matches;
     setTheme(prefersDark ? "dark" : "light");
   }, []);
+
+  const observerRef = useRef(null);
+  const [isSticky, setIsSticky] = useState(false);
+
+  // observer logic (threshold change)
+  useEffect(() => {
+    if (!observerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // if the observed spacer is NOT intersecting with the viewport top edge, it means the scroll has passed it
+        setIsSticky(!entry.isIntersecting);
+      },
+      {
+        // observe when the element is 0% visible AND when it is 100% visible
+        threshold: [0, 1],
+      }
+    );
+
+    observer.observe(observerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const dynamicBg = isSticky ? "var(--cardbg2)" : "var(--cardbg)";
 
   const tabContent = {
     Overview: [
@@ -177,7 +201,11 @@ const DashboardPage = () => {
           {userData.profileImageUrl && (
             <div
               className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden 
-                       my-4 mr-4 sm:my-8 sm:mr-8 md:my-10 md:mr-10 lg:my-12 lg:mr-12 flex-shrink-0"
+                       mt-4 mb-2 mr-4
+                       sm:mt-8 sm:mb-6 sm:mr-8
+                       md:mt-10 md:mb-8 md:mr-10
+                       lg:mt-12 lg:mb-10 lg:mr-12
+                       flex-shrink-0"
             >
               <Image
                 src={userData.profileImageUrl}
@@ -201,16 +229,27 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54 gap-3 sm:gap-5 md:gap-7 lg:gap-8">
-          {tabs.map((tab) => (
-            <Button
-              key={tab}
-              text={tab}
-              isActive={activeTab === tab}
-              onClick={() => setActiveTab(tab)}
-            />
-          ))}
-        </div>
+      </div>
+
+      <div ref={observerRef} className="h-0 w-full" aria-hidden="true" />
+
+      {/* Tabs Bar */}
+      <div
+        className="flex flex-row w-full px-4 sm:px-24 md:px-30 lg:px-54 gap-3 sm:gap-5 md:gap-7 lg:gap-8 
+                   pt-2 sticky top-0 z-100"
+        style={{
+          backgroundColor: dynamicBg,
+          transition: "background-color 0.3s ease-in-out", // smooth transition
+        }}
+      >
+        {tabs.map((tab) => (
+          <Button
+            key={tab}
+            text={tab}
+            isActive={activeTab === tab}
+            onClick={() => setActiveTab(tab)}
+          />
+        ))}
       </div>
 
       <div className="pt-8 sm:pt-10 md:pt-12 lg:pt-18 z-20">
