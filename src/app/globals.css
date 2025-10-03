@@ -6,6 +6,7 @@
   ---bg: #F3F3F3;
   --text: #1A1A1A;
   --cardbg: rgba(0, 0, 0, 0.05);
+  --cardbg2: rgb(243, 243, 243, 0.8);
   --accent: #1db954;
   --hover: #D0D0D0;
 }
@@ -15,6 +16,7 @@
     --bg: #121212;
     --text: #ffffff;
     --cardbg: rgba(255, 255, 255, 0.05);
+    --cardbg2: rgba(18, 18, 18, 0.8);
     --accent: #1db954;
     --hover: #4a4a4a;
   }
@@ -24,6 +26,7 @@ html.light {
   --bg: #F3F3F3;
   --text: #1A1A1A;
   --cardbg: rgba(0, 0, 0, 0.05);
+  --cardbg2: rgb(243, 243, 243, 0.8);
   --accent: #1db954;
   --hover: #D0D0D0;
 }
@@ -32,6 +35,7 @@ html.dark {
   --bg: #121212;
   --text: #ffffff;
   --cardbg: rgba(255, 255, 255, 0.05);
+  --cardbg2: rgba(18, 18, 18, 0.8);
   --accent: #1db954;
   --hover: #4a4a4a;
 }
